@@ -9,24 +9,24 @@ public class Entry {
 	private String publisher;
 	private int id;
 	private static int counter = 0;
-	private static final int FORMAT_RAW = 0;
-	private static final int FORMAT_AUHOR_YEAR = 1;
-	private static final int FORMAT_AUHOR_YEAR_COMPACT = 2;
+	public static final int FORMAT_RAW = 0;
+	public static final int FORMAT_AUTHOR_YEAR = 1;
+	public static final int FORMAT_AUTHOR_YEAR_COMPACT = 2;
 	
-	private Entry(String title, Author author, String publisher, int year){
-		this.id = this.counter;
+	private Entry(Author author, String title, int year, String publisher){
+		this.id = count();
 		this.title = title;
 		this.author = author;
 		this.publisher = publisher;
 		this.year = year;
-		this.stepCounter();
+		stepCounter();
 	}
 	
-	public static Entry make(String title, Author author, String publisher, int year){
-		if(this.year <= 2016 && this.year >= 1500 &&
-		   this.author != null 
-		   && !this.title.equals("");){
-			   Entry e = new Entry();
+	public static Entry make(Author author, String title, int year, String publisher){
+		if(year <= 2016 && year >= 1500 &&
+		   author != null 
+		   && !title.equals("")) {
+			   Entry e = new Entry(author, title, year, publisher);
 			   return e;
 		   } else return null;
 	}
@@ -35,7 +35,7 @@ public class Entry {
 		return counter;
 	}
 	
-	public String getId(){
+	public int getId(){
 		return this.id;
 	}
 	
@@ -55,6 +55,10 @@ public class Entry {
 		return this.year;
 	}
 	
+	public String getTitle(){
+		return this.title;
+	}
+	
 	public void stepCounter(){
 		this.counter++;
 	}
@@ -68,7 +72,7 @@ public class Entry {
 			}
 		} else if(param == 1) {
 			if(this.publisher.equals("")){
-				return "[" + this.getLastName() + this.getYear() + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getYear();
+				return "[" + this.getAuthor().getLastName() + this.getYear() + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getYear();
 			} else {
 				return "[" + this.getId() + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getPublisher() + ", " + this.getYear();
 			}
@@ -76,9 +80,10 @@ public class Entry {
 			if(this.publisher.equals("")){
 				return "[" + this.getId() + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getYear();
 			} else {
-				return "[" + this.getId() + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getPublisher() + ", " + this.getYear();
+				
+				int v = Integer.toString(this.getYear()).length();
+				return "[" + this.getAuthor().getLastName().substring(0,2) + Integer.toString(this.getYear()).substring(v - 2, v) + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getPublisher() + ", " + this.getYear();
 			}
-		}
-		return "";
+		} else return "";
 	}
 }

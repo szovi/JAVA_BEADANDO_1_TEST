@@ -19,7 +19,7 @@ public class Entry {
 		this.author = author;
 		this.publisher = publisher;
 		this.year = year;
-		stepCounter();
+		this.counter++;
 	}
 	
 	public static Entry make(Author author, String title, int year, String publisher){
@@ -59,10 +59,6 @@ public class Entry {
 		return this.title;
 	}
 	
-	public void stepCounter(){
-		this.counter++;
-	}
-	
 	public String show(int param){
 		if(param == 0){
 			if(this.publisher.equals("")){
@@ -74,14 +70,15 @@ public class Entry {
 			if(this.publisher.equals("")){
 				return "[" + this.getAuthor().getLastName() + this.getYear() + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getYear();
 			} else {
-				return "[" + this.getId() + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getPublisher() + ", " + this.getYear();
+				return "["  + this.getAuthor().getLastName() + this.getYear() + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getPublisher() + ", " + this.getYear();
 			}
 		} else if(param == 2){
+			int v;
 			if(this.publisher.equals("")){
-				return "[" + this.getId() + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getYear();
-			} else {
-				
-				int v = Integer.toString(this.getYear()).length();
+				v = Integer.toString(this.getYear()).length();
+				return "[" + this.getAuthor().getLastName().substring(0,2) + Integer.toString(this.getYear()).substring(v - 2, v) + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getYear();
+			} else {			
+				v = Integer.toString(this.getYear()).length();
 				return "[" + this.getAuthor().getLastName().substring(0,2) + Integer.toString(this.getYear()).substring(v - 2, v) + "] " + this.author.show() + ". " + this.getTitle() + ", " + this.getPublisher() + ", " + this.getYear();
 			}
 		} else return "";

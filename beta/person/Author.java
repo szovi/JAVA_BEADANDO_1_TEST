@@ -1,6 +1,6 @@
 
 //author:szovi
-//desc:valami
+//desc:Author osztály megvalósítása
 package person;
 
 public class Author {
